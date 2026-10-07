@@ -1,11 +1,10 @@
-const dns = require("dns");
-dns.setServers(["8.8.8.8", "1.1.1.1"]);
-
 const express = require("express");
 const mongoose = require("mongoose");
 
 const config = require("./utils/config");
 const logger = require("./utils/logger");
+
+const batchRouter = require("./controllers/batch");
 
 const app = express();
 
@@ -19,5 +18,6 @@ mongoose
   });
 
 app.use(express.json());
+app.use("/api/batch", batchRouter);
 
 module.exports = app;
