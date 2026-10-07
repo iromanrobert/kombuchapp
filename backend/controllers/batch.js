@@ -9,7 +9,7 @@ batchRouter.get("/", async (request, response) => {
 batchRouter.get("/:id", async (request, response) => {
   const batch = await Batch.findById(request.params.id);
   if (!batch) {
-    response.status(404).end();
+    return response.status(404).end();
   }
   response.json(batch);
 });
@@ -31,10 +31,8 @@ batchRouter.post("/", async (request, response) => {
 });
 
 batchRouter.delete("/:id", async (request, response) => {
-  const batch = await Batch.findByIdAndDelete(request.params.id);
-  if (!batch) {
-    response.status(404).end();
-  }
+  await Batch.findByIdAndDelete(request.params.id);
+
   response.status(204).end();
 });
 

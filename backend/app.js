@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 
 const config = require("./utils/config");
 const logger = require("./utils/logger");
+const middleware = require("./utils/middleware");
 
 const batchRouter = require("./controllers/batch");
 
@@ -18,6 +19,11 @@ mongoose
   });
 
 app.use(express.json());
+app.use(middleware.requestLogger);
+
 app.use("/api/batch", batchRouter);
+
+app.use(middleware.unknownEndpoint);
+app.use(middleware.errorHandler);
 
 module.exports = app;
