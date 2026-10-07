@@ -6,6 +6,11 @@ batchRouter.get("/", async (request, response) => {
   response.json(notes);
 });
 
+batchRouter.get("/:id", async (request, response) => {
+  const note = await Batch.findById(request.params.id);
+  response.json(note);
+});
+
 batchRouter.post("/", async (request, response) => {
   const body = request.body;
 
@@ -20,6 +25,11 @@ batchRouter.post("/", async (request, response) => {
 
   const savedBatch = await batch.save();
   response.status(201).json(savedBatch);
+});
+
+batchRouter.delete("/:id", async (request, response) => {
+  await Batch.findByIdAndDelete(request.params.id);
+  response.status(204).end();
 });
 
 module.exports = batchRouter;
