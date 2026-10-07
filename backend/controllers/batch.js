@@ -2,13 +2,16 @@ const batchRouter = require("express").Router();
 const Batch = require("../models/batch");
 
 batchRouter.get("/", async (request, response) => {
-  const notes = await Batch.find({});
-  response.json(notes);
+  const batches = await Batch.find({});
+  response.json(batches);
 });
 
 batchRouter.get("/:id", async (request, response) => {
-  const note = await Batch.findById(request.params.id);
-  response.json(note);
+  const batch = await Batch.findById(request.params.id);
+  if (!batch) {
+    response.status(404).end();
+  }
+  response.json(batch);
 });
 
 batchRouter.post("/", async (request, response) => {
@@ -28,7 +31,10 @@ batchRouter.post("/", async (request, response) => {
 });
 
 batchRouter.delete("/:id", async (request, response) => {
-  await Batch.findByIdAndDelete(request.params.id);
+  const batch = await Batch.findByIdAndDelete(request.params.id);
+  if (!batch) {
+    response.status(404).end();
+  }
   response.status(204).end();
 });
 
