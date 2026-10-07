@@ -2,12 +2,33 @@ const mongoose = require("mongoose");
 
 const batchSchema = new mongoose.Schema(
   {
-    name: String,
-    batchNumber: String,
-    fermentationStage: String,
-    startDate: Date,
-    targetDate: Date,
-    status: String,
+    name: {
+      type: String,
+      required: true,
+    },
+    batchNumber: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    fermentationStage: {
+      type: String,
+      enum: ["1F", "2F"],
+      default: "1F",
+    },
+    startDate: {
+      type: Date,
+      required: true,
+    },
+    targetDate: {
+      type: Date,
+      required: true,
+    },
+    status: {
+      type: String,
+      enum: ["active", "completed"],
+      default: "active",
+    },
   },
   { timestamps: true },
 );
