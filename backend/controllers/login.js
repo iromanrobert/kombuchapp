@@ -1,9 +1,18 @@
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+const rateLimit = require("express-rate-limit");
 const loginRouter = require("express").Router();
 const User = require("../models/user");
 
-loginRouter.post("/", async (request, response) => {
+const loginLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  limit: 5,
+  skipSuccessfulRequest: true,
+  ipKeyGenerator: (request) => `${request.ip}-${request.body.name ?? ""}`,
+  message: { error: "Too many login attempts, try again later" },
+});
+
+loginRouter.post("/", loginLimiter, async (request, response) => {
   const { email, password } = request.body;
 
   const user = await User.findOne({ email });
