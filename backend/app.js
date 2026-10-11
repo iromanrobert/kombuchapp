@@ -11,6 +11,9 @@ const loginRouter = require("./controllers/login");
 
 const app = express();
 
+app.use(middleware.errorHandler);
+app.use(middleware.tokenExtractor);
+
 mongoose
   .connect(config.MONGODB_URI, { family: 4 })
   .then(() => {
@@ -27,7 +30,6 @@ app.use("/api/batch", batchRouter);
 app.use("/api/users", userRouter);
 app.use("/api/login", loginRouter);
 
-app.use(middleware.unknownEndpoint);
 app.use(middleware.errorHandler);
 
 module.exports = app;

@@ -29,7 +29,13 @@ const batchSchema = new mongoose.Schema(
       enum: ["active", "completed"],
       default: "active",
     },
+
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
   },
+
   { timestamps: true },
 );
 

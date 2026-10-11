@@ -7,7 +7,7 @@ const User = require("../models/user");
 const loginLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   limit: 5,
-  skipSuccessfulRequest: true,
+  skipSuccessfulRequests: true,
   keyGenerator: (req) => ipKeyGenerator(req.ip),
   message: { error: "Too many login attempts, try again later" },
 });
