@@ -17,7 +17,7 @@ const userSchema = new mongoose.Schema({
   batches: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Blog",
+      ref: "Batch",
     },
   ],
 });

@@ -1,11 +1,13 @@
-const jwt = require("jsonwebtoken");
 const batchRouter = require("express").Router();
 const auth = require("../utils/auth");
 const Batch = require("../models/batch");
 const User = require("../models/user");
 
 batchRouter.get("/", auth, async (request, response) => {
-  const batches = await Batch.find({ user: request.user.id });
+  const batches = await Batch.find({ user: request.user.id }).populate("user", {
+    name: 1,
+    email: 1,
+  });
   response.json(batches);
 });
 
