@@ -6,6 +6,8 @@ import "./index.css";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <div className="bg-muted ">
+      <RouterProvider router={router} />
+    </div>
   </StrictMode>,
 );

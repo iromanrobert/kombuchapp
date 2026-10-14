@@ -1,41 +1,11 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import loginService from "../api/login";
+import LoginForm from "@/features/auth/LoginForm";
 
 export default function LoginPage() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const navigate = useNavigate();
-
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    try {
-      const user = await loginService.login({ email, password });
-      window.localStorage.setItem("loggedUser", JSON.stringify(user));
-      navigate("/dashboard");
-    } catch (error) {
-      console.log(error);
-    }
-  };
   return (
-    <>
-      <form onSubmit={handleLogin}>
-        <input
-          type="email"
-          value={email}
-          onChange={({ target }) => {
-            setEmail(target.value);
-          }}
-        />
-
-        <input
-          type="password"
-          value={password}
-          onChange={({ target }) => setPassword(target.value)}
-        />
-
-        <button type="submit">Login</button>
-      </form>
-    </>
+    <section className="flex min-h-svh flex-col items-center justify-center bg-muted p-6 md:p-10">
+      <div className="w-full max-w-sm md:max-w-4xl">
+        <LoginForm />
+      </div>
+    </section>
   );
 }
