@@ -12,20 +12,26 @@ import {
   FieldSeparator,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
+import { Spinner } from "@/components/ui/spinner";
 
 export default function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    if (isSubmitting) return;
+    setIsSubmitting(true);
     try {
       const user = await loginService.login({ email, password });
       window.localStorage.setItem("loggedUser", JSON.stringify(user));
       navigate("/dashboard");
     } catch (error) {
       console.log(error);
+    } finally {
+      setIsSubmitting(false);
     }
   };
   return (
@@ -45,7 +51,7 @@ export default function LoginForm() {
                 <Input
                   id="email"
                   value={email}
-                  type={email}
+                  type="email"
                   placeholder="myemail@example.com"
                   onChange={({ target }) => setEmail(target.value)}
                 />
@@ -60,7 +66,15 @@ export default function LoginForm() {
                 />
               </Field>
               <Field>
-                <Button type="submit">Login</Button>
+                <Button type="submit">
+                  {isSubmitting ? (
+                    <span className="flex items-center justify-center gap-2">
+                      <Spinner /> Signing in..
+                    </span>
+                  ) : (
+                    "Sign in"
+                  )}
+                </Button>
               </Field>
               <FieldDescription>
                 Don&apos;t have an account?{" "}
