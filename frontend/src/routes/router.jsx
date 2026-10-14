@@ -12,7 +12,7 @@ const router = createBrowserRouter([
 
   // pages inside the app shell
   {
-    path: "/",
+    path: "/dashboard",
     children: [
       { index: true, element: <DashboardPage /> },
       // add more pages here as tickets are built
