@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import Layout from "@/Layout";
 import batchService from "../api/batch";
 
 export default function DashboardPage() {
@@ -20,10 +21,12 @@ export default function DashboardPage() {
   if (error) return <p>{error}</p>;
   if (!batches) return <p>loading...</p>;
   return (
-    <>
-      {batches.map((batch) => (
-        <p key={batch.id}>{batch.name}</p>
-      ))}
-    </>
+    <Layout>
+      <>
+        {batches.map((batch) => (
+          <p key={batch.id}>{batch.name}</p>
+        ))}
+      </>
+    </Layout>
   );
 }
